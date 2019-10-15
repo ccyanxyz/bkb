@@ -1,0 +1,24 @@
+language: node_js # 构建所需的语言环境
+node_js:
+  - "v11.14.0"  # 对应的版本
+branches:
+  only:
+  - master
+cache:
+  directories:
+  - node_modules
+before_install:
+- export TZ='Asia/Shanghai'
+install:
+ - npm install -g gitbook-cli
+script:
+- gitbook build
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  local-dir: ./_book/
+  target-branch: gh-pages
+  verbose: true
+  on:
+    branch: master
